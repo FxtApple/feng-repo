@@ -2,7 +2,33 @@ Resources:
   myVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 10.3.0.0/16
+      CidrBlock: 10.0.0.0/16
       Tags:
       - Key: Name
-        Value: vpc-template123aaa
+        Value: feng-vpc
+
+  myIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: feng-igw-0707
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: myVPC
+      InternetGatewayId:
+        Ref: myIGW
+        
+  mySubnetpub1a:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: myVPC
+        CidrBlock: 10.0.0.0/24
+        AvailabilityZone: "ap-northeast-1a"
+        Tags:
+        - Key: Name
+          Value: subnet-pub1a
